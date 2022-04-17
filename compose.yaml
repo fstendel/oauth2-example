@@ -1,0 +1,7 @@
+services:
+  ldap:
+    image: bitnami/openldap
+    ports:
+      - "1389:1389"
+    volumes:
+      - ${PWD}/infrastructure/ldap/custom.ldif:/ldifs/custom.ldif
