@@ -1,0 +1,21 @@
+dn: dc=order,dc=services
+dc: order
+objectClass: dcObject
+objectClass: organisation
+o: order
+
+dn: ou=users,dc=order,dc=services
+ou: users
+objectClass: organizationalunit
+
+
+dn: cn=user03,ou=users,dc=order,dc=services
+cn: user03
+objectclass: person
+ou: users
+
+dn: cn=user02,ou=users,dc=order,dc=services
+cn: user02
+objectclass: person
+ou: user
+
