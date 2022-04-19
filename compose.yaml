@@ -3,5 +3,9 @@ services:
     image: bitnami/openldap
     ports:
       - "1389:1389"
+    environment:
+      - LDAP_ROOT=dc=order,dc=services
     volumes:
-      - ${PWD}/infrastructure/ldap/custom.ldif:/ldifs/custom.ldif
+      - type: bind
+        source: ./infrastructure/ldap
+        target: /ldifs

@@ -1,21 +1,32 @@
 dn: dc=order,dc=services
-dc: order
 objectClass: dcObject
-objectClass: organisation
+objectClass: organization
+dc: order
 o: order
 
-dn: ou=users,dc=order,dc=services
-ou: users
-objectClass: organizationalunit
 
+dn: ou=people,dc=order,dc=services
+objectClass: organizationalUnit
+ou: people
 
-dn: cn=user03,ou=users,dc=order,dc=services
-cn: user03
+dn: uid=ordershipmentmanager,ou=people,dc=order,dc=services
 objectclass: person
-ou: users
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: William D. Elivery
+sn: Elivery
+uid: ordershipmentmanager
+ou: people
+description: Fictional person eglible for editing shipment records
+userpassword: {sha}dkfljlk34r2kljdsfk9
 
-dn: cn=user02,ou=users,dc=order,dc=services
-cn: user02
+dn: uid=orderprocessingmanager,ou=people,dc=order,dc=services
 objectclass: person
-ou: user
-
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: Agnes S. Ales 
+sn: Ales
+uid: orderprocessingmanager
+ou: people
+description: Fictional person eglible for editing order processing records
+userpassword: {sha}dkfljlk34r2kljdsfk9
