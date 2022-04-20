@@ -4,10 +4,36 @@ objectClass: organization
 dc: order
 o: order
 
-
 dn: ou=people,dc=order,dc=services
 objectClass: organizationalUnit
 ou: people
+
+dn: cn=shipment_viewer_group,dc=order,dc=services
+objectclass: groupOfNames
+objectclass: top
+member: uid=ordershipmentmanager,ou=people,dc=order,dc=services
+member: uid=orderprocessingmanager,ou=people,dc=order,dc=services
+cn: shipment_viewer_group
+
+dn: cn=processing_viewer_group,dc=order,dc=services
+objectclass: groupOfNames
+objectclass: top
+member: uid=ordershipmentmanager,ou=people,dc=order,dc=services
+member: uid=orderprocessingmanager,ou=people,dc=order,dc=services
+cn: processing_viewer_group
+
+dn: cn=processing_editor_group,dc=order,dc=services
+objectclass: groupOfNames
+objectclass: top
+member: uid=orderprocessingmanager,ou=people,dc=order,dc=services
+cn: processing_editor_group
+
+
+dn: cn=shipment_editor_group,dc=order,dc=services
+objectclass: groupOfNames
+objectclass: top
+member: uid=orderprocessingmanager,ou=people,dc=order,dc=services
+cn: shipment_editor_group
 
 dn: uid=ordershipmentmanager,ou=people,dc=order,dc=services
 objectclass: person
