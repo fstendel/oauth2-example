@@ -7,7 +7,7 @@ services:
       - LDAP_ROOT=dc=order,dc=services
     volumes:
       - type: bind
-        source: ./infrastructure/ldap
+        source: ./infrastructure/ldap/ldifs
         target: /ldifs
 
   keycloak:
@@ -24,10 +24,21 @@ services:
       - ALLOW_EMPTY_PASSWORD=yes
       - POSTGRESQL_USERNAME=bn_keycloak
       - POSTGRESQL_DATABASE=bitnami_keycloak
-    volumes:
-      - 'postgresql_data:/bitnami/postgresql'
+      
+  keycloak-setup:
+    image: docker.io/bitnami/keycloak:16
+    depends_on:
+      - keycloak
+    restart: on-failure
+    healthcheck:
+      start_period: 120s
+    command: >
+      sh -c "/opt/bitnami/keycloak/bin/kcadm.sh config credentials --server http://keycloak:8080/auth --realm master --user user --password bitnami --config /tmp/kcadm.config"
+      
+      
+#    volumes:
+#      - 'postgresql_data:/bitnami/postgresql'
 
-
-volumes:
-  postgresql_data:
-    driver: local
+#volumes:
+#  postgresql_data:
+#    driver: local
