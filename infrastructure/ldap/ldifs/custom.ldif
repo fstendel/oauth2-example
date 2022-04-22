@@ -8,28 +8,32 @@ dn: ou=people,dc=order,dc=services
 objectClass: organizationalUnit
 ou: people
 
-dn: cn=shipment_viewer_group,dc=order,dc=services
+dn: ou=groups,dc=order,dc=services
+objectClass: organizationalUnit
+ou: groups
+
+dn: cn=shipment_viewer_group,ou=groups,dc=order,dc=services
 objectclass: groupOfNames
 objectclass: top
 member: uid=ordershipmentmanager,ou=people,dc=order,dc=services
 member: uid=orderprocessingmanager,ou=people,dc=order,dc=services
 cn: shipment_viewer_group
 
-dn: cn=processing_viewer_group,dc=order,dc=services
+dn: cn=processing_viewer_group,ou=groups,dc=order,dc=services
 objectclass: groupOfNames
 objectclass: top
 member: uid=ordershipmentmanager,ou=people,dc=order,dc=services
 member: uid=orderprocessingmanager,ou=people,dc=order,dc=services
 cn: processing_viewer_group
 
-dn: cn=processing_editor_group,dc=order,dc=services
+dn: cn=processing_editor_group,ou=groups,dc=order,dc=services
 objectclass: groupOfNames
 objectclass: top
 member: uid=orderprocessingmanager,ou=people,dc=order,dc=services
 cn: processing_editor_group
 
 
-dn: cn=shipment_editor_group,dc=order,dc=services
+dn: cn=shipment_editor_group,ou=groups,dc=order,dc=services
 objectclass: groupOfNames
 objectclass: top
 member: uid=orderprocessingmanager,ou=people,dc=order,dc=services
@@ -39,8 +43,9 @@ dn: uid=ordershipmentmanager,ou=people,dc=order,dc=services
 objectclass: person
 objectclass: organizationalPerson
 objectclass: inetOrgPerson
-cn: William D. Elivery
-sn: Elivery
+cn: William
+sn: D. Elivery
+mail: delivery@localhost.io
 uid: ordershipmentmanager
 ou: people
 description: Fictional person eglible for editing shipment records
@@ -50,8 +55,9 @@ dn: uid=orderprocessingmanager,ou=people,dc=order,dc=services
 objectclass: person
 objectclass: organizationalPerson
 objectclass: inetOrgPerson
-cn: Agnes S. Ales 
-sn: Ales
+cn: Agnes
+sn: S. Ales
+mail: processing@localhost.io
 uid: orderprocessingmanager
 ou: people
 description: Fictional person eglible for editing order processing records
