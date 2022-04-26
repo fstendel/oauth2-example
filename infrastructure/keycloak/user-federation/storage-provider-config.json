@@ -1,0 +1,22 @@
+{
+	"id":"custom-storage-provider-8428780fd761",
+    "name": "Ldap",
+    "providerId": "ldap",
+    "providerType": "org.keycloak.storage.UserStorageProvider",
+    "parentId": "master",
+    "config": {
+        "fullSyncPeriod": ["60"],
+        "searchScope": ["2"],
+        "usersDn": ["ou=people,dc=order,dc=services"],
+        "priority": ["0"],
+        "userObjectClasses": ["inetOrgPerson,organizationalPerson"],
+        "usernameLDAPAttribute": ["uid"],
+        "rdnLDAPAttribute": ["uid"],
+        "lastSync": ["1650998080"],
+        "vendor": ["other"],
+        "editMode": ["READ_ONLY"],
+        "uuidLDAPAttribute": ["entryUUID"],
+        "connectionUrl": ["LDAP://ldap:1389"],
+        "authType": ["none"]
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "id": "custom-ldap-group-mapper-010b430ec07",
+    "parentId": "custom-storage-provider-8428780fd761",
+    "name": "custom-ldap-group-mapper",
+    "providerId": "group-ldap-mapper",
+    "providerType": "org.keycloak.storage.ldap.mappers.LDAPStorageMapper",
+    "config": {
+        "drop.non.existing.groups.during.sync": ["false"],
+        "group.name.ldap.attribute": ["cn"],
+        "group.object.classes": ["groupOfNames"],
+        "groups.dn": ["ou=groups,dc=order,dc=services"],
+        "groups.path": ["/"],
+        "ignore.missing.groups": ["false"],
+        "memberof.ldap.attribute": ["memberOf"],
+        "membership.attribute.type": ["DN"],
+        "membership.ldap.attribute": ["member"],
+        "membership.user.ldap.attribute": ["uid"],
+        "mode": ["READ_ONLY"],
+        "preserve.group.inheritance": ["true"],
+        "user.roles.retrieve.strategy": ["LOAD_GROUPS_BY_MEMBER_ATTRIBUTE"]
+    }
+}
