@@ -30,52 +30,15 @@ services:
     depends_on:
       - keycloak
     restart: on-failure
-    healthcheck:
-      start_period: 120s
     command: >
       sh -c "/opt/bitnami/keycloak/bin/kcadm.sh config credentials --server http://keycloak:8080/auth --realm master --user user --password bitnami --config /tmp/kcadm.config &&
              /opt/bitnami/keycloak/bin/kcadm.sh create components -r master \
-                -s 'name=\"Ldap\"' \
-                -s parentId=master \
-                -s providerId=ldap \
-                -s providerType=org.keycloak.storage.UserStorageProvider \
-                -s config.priority=[0] \
-                -s config.fullSyncPeriod=[60] \
-                -s 'config.editMode=[\"READ_ONLY\"]' \
-                -s 'config.connectionUrl=[\"LDAP:\/\/ldap:1389\"]' \
-                -s 'config.usersDn=[\"ou=people,dc=order,dc=services\"]' \
-                -s 'config.uuidLDAPAttribute=[\"entryUUID\"]' \
-                -s 'config.rdnLDAPAttribute=[\"uid\"]' \
-                -s 'config.usernameLDAPAttribute=[\"uid\"]' \
-                -s 'config.userObjectClasses=[\"inetOrgPerson,organizationalPerson\"]' \
-                -s 'config.searchScope=[\"2\"]' \
-                -s 'config.vendor=[\"other\"]' \
-                -s 'config.authType=[\"none\"]' \
+                -f provisioning/user-federation/storage-provider-config.json \
+                --config /tmp/kcadm.config &&
+             /opt/bitnami/keycloak/bin/kcadm.sh create components -r master \
+                -f provisioning/user-federation/ldap-group-mapper.json \
                 --config /tmp/kcadm.config"
- 
- #/opt/bitnami/keycloak/bin/kcadm.sh create components -r master \
- #               -s name=\"Ldap\" \
- #               -s parentId=master \
- #               -s providerId=ldap \
- #               -s providerType=org.keycloak.storage.UserStorageProvider \ 
- #               -s 'config.priority=[\"1\"]' \
- #               -s 'config.fullSyncPeriod=[\"60\"]' \
- #               -s 'config.changedSyncPeriod=[\"-1\"]' \
- #               -s 'config.cachePolicy=[\"DEFAULT\"]' \
- #               -s 'config.batchSizeForSync=[\"1000\"]' \
- #               -s 'config.syncRegistrations=[\"false\"]' \
- #               -s 'config.vendor=[\"other\"]' \
- ##               -s 'config.uuidLDAPAttribute=[\"entryUUID\"]' \
- #               -s 'config.userObjectClasses=[\"inetOrgPerson, organizationalPerson\"]' \
- #               -s 'config.usersDn=[\"ou=people,de=order,dc=services\"]' \
- #               -s 'config.searchScope=2' \
- #               -s 'config.authType=[\"none\"]' \
- #               --config /tmp/kcadm.config"
-      
-      
-#    volumes:
-#      - 'postgresql_data:/bitnami/postgresql'
-
-#volumes:
-#  postgresql_data:
-#    driver: local
+    volumes:
+      - type: bind
+        source: ./infrastructure/keycloak
+        target: /provisioning
