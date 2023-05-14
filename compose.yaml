@@ -12,6 +12,12 @@ services:
 
   keycloak:
     image: docker.io/bitnami/keycloak:16
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
     depends_on:
       - postgresql
     ports:
@@ -28,17 +34,12 @@ services:
   keycloak-setup:
     image: docker.io/bitnami/keycloak:16
     depends_on:
-      - keycloak
+      keycloak:
+        condition: service_healthy
     restart: on-failure
     command: >
       sh -c "/opt/bitnami/keycloak/bin/kcadm.sh config credentials --server http://keycloak:8080/auth --realm master --user user --password bitnami --config /tmp/kcadm.config &&
-             /opt/bitnami/keycloak/bin/kcadm.sh create components -r master \
-                -f provisioning/user-federation/storage-provider-config.json \
-                --config /tmp/kcadm.config &&
-             /opt/bitnami/keycloak/bin/kcadm.sh create components -r master \
-                -f provisioning/user-federation/ldap-group-mapper.json \
-                --config /tmp/kcadm.config"
+            /opt/bitnami/keycloak/bin/kcadm.sh create components --realm master --file provisioning/user-federation/storage-provider-config.json --config /tmp/kcadm.config &&
+            /opt/bitnami/keycloak/bin/kcadm.sh create components --realm master --file provisioning/user-federation/ldap-group-mapper.json --config /tmp/kcadm.config"
     volumes:
-      - type: bind
-        source: ./infrastructure/keycloak
-        target: /provisioning
+      - ./infrastructure/keycloak:/provisioning
