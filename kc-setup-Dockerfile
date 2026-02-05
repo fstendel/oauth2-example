@@ -1,0 +1,6 @@
+ARG KEYCLOAK_IMAGE_URL=
+FROM $KEYCLOAK_IMAGE_URL
+
+USER root 
+
+RUN apt-get update && apt-get -y install jq
