@@ -33,14 +33,19 @@ services:
       
   keycloak-setup:
     image: docker.io/bitnamilegacy/keycloak:latest
+    build:
+      context: .
+      args:
+        KEYCLOAK_IMAGE_URL: docker.io/bitnamilegacy/keycloak:latest
+      dockerfile: kc-setup-Dockerfile
     depends_on:
       keycloak:
         condition: service_healthy
     restart: on-failure
     command: >
       sh -c "/opt/bitnami/keycloak/bin/kcadm.sh config credentials --server http://keycloak:8080 --realm master --user user --password bitnami --config /tmp/kcadm.config &&
-            export MASTER_REALM_ID=$(/opt/bitnami/keycloak/bin/kcadm.sh get realms/master --no-config --server http://keycloak:8080 --realm master --user user --password bitnami --fields id | grep -zoP '\"id\"\s*:\s*\K\"\S*\"' | tr -d '\"') &&
-            /opt/bitnami/keycloak/bin/kcadm.sh create components --realm master --file provisioning/user-federation/storage-provider-config.json --config /tmp/kcadm.config"
+            /opt/bitnami/keycloak/bin/kcadm.sh get realms/master --server http://keycloak:8080 --realm master --fields id --config /tmp/kcadm.config | jq .id > /tmp/master.realm.id &&
+            /opt/bitnami/keycloak/bin/kcadm.sh create components --realm master -s parentId=$(cat /tmp/master.realm.id) --file provisioning/user-federation/storage-provider-config.json --config /tmp/kcadm.config"
 
     volumes:
       - ./infrastructure/keycloak:/provisioning
